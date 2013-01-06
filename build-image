@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+if [ ! "`whoami`" = "root" ]; then
+  sudo $0
+  exit
+fi
+
+# fetch the latest image-debootstrap
+if [ ! -d "image-debootstrap" ]; then
+  git clone git://github.com/larshvile/image-debootstrap.git
+else
+  (cd image-debootstrap; git pull)
+fi
+
+# do it
+image-debootstrap/image-debootstrap install -c net4801.cfg
+# no customization yet..
+image-debootstrap/image-debootstrap bundle -c net4801.cfg -a work/disk.staging.install.tar
+

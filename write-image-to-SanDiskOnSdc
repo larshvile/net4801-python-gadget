@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+if [ ! "`whoami`" = "root" ]; then
+  sudo $0
+  exit
+fi
+
+umount /dev/sdc1 || true
+image-debootstrap/write-image-to-device /dev/sdc Myson 257MB
+
